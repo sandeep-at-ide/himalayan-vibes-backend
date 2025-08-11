@@ -23,7 +23,28 @@ class PackageResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('slug')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('title')
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('itineraries')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('price')
+                    ->numeric()
+                    ->prefix('$'),
+                Forms\Components\TextInput::make('location')
+                    ->numeric(),
+                Forms\Components\TextInput::make('duration_days')
+                    ->numeric(),
+                Forms\Components\TextInput::make('available_spots')
+                    ->numeric(),
+                Forms\Components\Textarea::make('image_url')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('created_by')
+                    ->numeric(),
+                Forms\Components\TextInput::make('seo_id')
+                    ->numeric(),
             ]);
     }
 
@@ -31,7 +52,36 @@ class PackageResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('slug')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('price')
+                    ->money()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('location')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('duration_days')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('available_spots')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_by')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('seo_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

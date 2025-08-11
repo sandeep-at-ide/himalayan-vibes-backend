@@ -23,7 +23,23 @@ class BookingResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('user_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('package_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\DatePicker::make('booking_date'),
+                Forms\Components\TextInput::make('number_of_people')
+                    ->numeric(),
+                Forms\Components\TextInput::make('total_price')
+                    ->numeric(),
+                Forms\Components\TextInput::make('vat_amount')
+                    ->numeric(),
+                Forms\Components\TextInput::make('discount')
+                    ->numeric(),
+                Forms\Components\TextInput::make('status')
+                    ->required(),
             ]);
     }
 
@@ -31,7 +47,36 @@ class BookingResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('user_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('package_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('booking_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('number_of_people')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('total_price')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('vat_amount')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('discount')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

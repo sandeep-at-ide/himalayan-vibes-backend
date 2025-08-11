@@ -9,4 +9,8 @@ class SiteSetting extends Model
 {
     /** @use HasFactory<\Database\Factories\SiteSettingFactory> */
     use HasFactory;
+    protected $fillable = ['*'];
+    protected $casts = [
+        'custom_fields' => 'array',
+    ];
 }

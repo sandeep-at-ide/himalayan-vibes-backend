@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Blog>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Page>
  */
-class BlogFactory extends Factory
+class PageFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,13 +16,14 @@ class BlogFactory extends Factory
      */
     public function definition(): array
     {
-        return [
+       return [
             'slug' => fake()->unique()->slug(),
-            'title' => fake()->sentence(4),
-            'content' => fake()->paragraph(10),
-            'author_id' => \App\Models\TeamMember::factory(),
+            'title' => fake()->sentence(3),
+            'content' => fake()->paragraph(5),
             'seo_id' => \App\Models\SeoSetting::factory(),
-            'published_at' => now(),
+            'custom_fields' => json_encode([
+                'extra_info' => fake()->sentence(),
+            ]),
         ];
 
     }

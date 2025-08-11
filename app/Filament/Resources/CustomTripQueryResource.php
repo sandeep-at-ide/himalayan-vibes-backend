@@ -23,7 +23,28 @@ class CustomTripQueryResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('user_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('name')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('email')
+                    ->email()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('phone')
+                    ->tel()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('preferred_location')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('travel_dates')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('number_of_people')
+                    ->numeric(),
+                Forms\Components\TextInput::make('budget')
+                    ->numeric(),
+                Forms\Components\Textarea::make('message')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('status')
+                    ->required(),
             ]);
     }
 
@@ -31,7 +52,34 @@ class CustomTripQueryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('user_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('preferred_location')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('travel_dates')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('number_of_people')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('budget')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

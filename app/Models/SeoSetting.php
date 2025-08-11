@@ -1,13 +1,16 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SeoSetting extends Model
 {
-    //  use HasFactory;
+     use HasFactory;
     protected $fillable = ['*'];
+    protected $casts = [
+        'custom_fields' => 'array',
+    ];
 
     public function teamMember()
     {

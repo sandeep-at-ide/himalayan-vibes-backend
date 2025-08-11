@@ -23,7 +23,24 @@ class SiteSettingResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('site_name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('logo_url')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('contact_email')
+                    ->email()
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('phone_number')
+                    ->tel()
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('address')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('social_links'),
+                Forms\Components\TextInput::make('accessed_by')
+                    ->numeric(),
             ]);
     }
 
@@ -31,7 +48,23 @@ class SiteSettingResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('site_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('contact_email')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone_number')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('accessed_by')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('number_of_people')->nullable();
             $table->decimal('budget', 10, 2)->nullable();
             $table->text('message')->nullable();
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'reviewed', 'approved', 'rejected', 'replied'])->default('pending');
             $table->timestamps();
         });
 

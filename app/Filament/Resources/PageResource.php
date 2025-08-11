@@ -23,7 +23,16 @@ class PageResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('slug')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('title')
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('content')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('seo_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('custom_fields'),
             ]);
     }
 
@@ -31,7 +40,21 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('slug')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('seo_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-    // use HasFactory;
+    use HasFactory;
 
     protected $fillable = ['*'];
+    protected $casts = [
+        'custom_fields' => 'array',
+    ];
 
     public function seoSetting()
     {

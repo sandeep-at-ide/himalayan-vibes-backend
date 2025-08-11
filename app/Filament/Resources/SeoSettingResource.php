@@ -23,7 +23,13 @@ class SeoSettingResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('meta_title')
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('meta_description')
+                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('meta_keywords')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('custom_fields'),
             ]);
     }
 
@@ -31,7 +37,16 @@ class SeoSettingResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('meta_title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
