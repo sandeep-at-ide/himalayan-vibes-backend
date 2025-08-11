@@ -38,11 +38,12 @@ class User extends Authenticatable
         return $this->hasMany(ContactMessage::class, 'user_id');
     }
 
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'phone', 
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
-   use HasFactory;
+//    use HasFactory;
+    protected $guarded = [];
 
-    public function teamMember()
+    public function author()
     {
         return $this->belongsTo(TeamMember::class, 'author_id');
     }

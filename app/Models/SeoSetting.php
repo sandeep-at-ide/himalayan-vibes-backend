@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SeoSetting extends Model
 {
-     use HasFactory;
+    //  use HasFactory;
+    protected $fillable = ['*'];
 
     public function teamMember()
     {

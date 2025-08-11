@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Destination extends Model
 {
-    use HasFactory;
+    // use HasFactory;
+    protected $fillable = ['*'];
 
     public function packages()
     {

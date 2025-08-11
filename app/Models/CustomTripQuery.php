@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CustomTripQuery extends Model
 {
-    use HasFactory;
+    // use HasFactory;
+    protected $fillable = ['*'];
 
     public function user()
     {
