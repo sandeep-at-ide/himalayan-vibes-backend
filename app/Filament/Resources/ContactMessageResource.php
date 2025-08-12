@@ -82,4 +82,14 @@ class ContactMessageResource extends Resource
             'edit' => Pages\EditContactMessage::route('/{record}/edit'),
         ];
     }
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Content Management';  // assign appropriate group name
+    }
+
+    public static function getNavigationGroupIcon(): ?string
+    {
+        return 'heroicon-o-mail'; // optional: icon for the group
+    }
+
 }

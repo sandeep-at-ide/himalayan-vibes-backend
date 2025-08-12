@@ -84,4 +84,13 @@ class PageResource extends Resource
             'edit' => Pages\EditPage::route('/{record}/edit'),
         ];
     }
+     public static function getNavigationGroup(): ?string
+    {
+        return 'Content Management';  // assign appropriate group name
+    }
+
+    public static function getNavigationGroupIcon(): ?string
+    {
+        return 'heroicon-o-document-text'; // optional: icon for the group
+    }
 }

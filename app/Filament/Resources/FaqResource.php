@@ -79,4 +79,13 @@ class FaqResource extends Resource
             'edit' => Pages\EditFaq::route('/{record}/edit'),
         ];
     }
+     public static function getNavigationGroup(): ?string
+    {
+        return 'Content Management';  // assign appropriate group name
+    }
+
+    public static function getNavigationGroupIcon(): ?string
+    {
+        return 'heroicon-o-question-mark-circle'; // optional: icon for the group
+    }
 }

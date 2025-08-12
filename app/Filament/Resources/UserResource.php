@@ -98,4 +98,13 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Users & Teams ';  // assign appropriate group name
+    }
+
+    public static function getNavigationGroupIcon(): ?string
+    {
+        return 'heroicon-o-user'; // optional: icon for the group
+    }
 }

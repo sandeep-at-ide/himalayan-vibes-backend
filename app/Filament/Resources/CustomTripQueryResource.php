@@ -109,4 +109,14 @@ class CustomTripQueryResource extends Resource
             'edit' => Pages\EditCustomTripQuery::route('/{record}/edit'),
         ];
     }
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Bookings & Queries';  // assign appropriate group name
+    }
+
+    public static function getNavigationGroupIcon(): ?string
+    {
+        return 'heroicon-o-clipboard-list'; // optional: icon for the group
+    }
+
 }

@@ -80,4 +80,13 @@ class TeamMemberResource extends Resource
             'edit' => Pages\EditTeamMember::route('/{record}/edit'),
         ];
     }
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Users & Teams ';  // assign appropriate group name
+    }
+
+    public static function getNavigationGroupIcon(): ?string
+    {
+        return 'heroicon-o-users'; // optional: icon for the group
+    }
 }

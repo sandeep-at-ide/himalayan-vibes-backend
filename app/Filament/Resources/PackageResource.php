@@ -111,4 +111,13 @@ class PackageResource extends Resource
             'edit' => Pages\EditPackage::route('/{record}/edit'),
         ];
     }
+     public static function getNavigationGroup(): ?string
+    {
+        return 'Content Management';  // assign appropriate group name
+    }
+
+    public static function getNavigationGroupIcon(): ?string
+    {
+        return 'heroicon-o-briefcase'; // optional: icon for the group
+    }
 }

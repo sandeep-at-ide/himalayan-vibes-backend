@@ -86,4 +86,13 @@ class ReviewResource extends Resource
             'edit' => Pages\EditReview::route('/{record}/edit'),
         ];
     }
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Payments & Reviews';  // assign appropriate group name
+    }
+
+    public static function getNavigationGroupIcon(): ?string
+    {
+        return 'heroicon-o-star'; // optional: icon for the group
+    }
 }

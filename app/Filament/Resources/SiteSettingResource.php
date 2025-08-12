@@ -94,4 +94,13 @@ class SiteSettingResource extends Resource
             'edit' => Pages\EditSiteSetting::route('/{record}/edit'),
         ];
     }
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Settings';  // assign appropriate group name
+    }
+
+    public static function getNavigationGroupIcon(): ?string
+    {
+        return 'heroicon-o-cog'; // optional: icon for the group
+    }
 }
