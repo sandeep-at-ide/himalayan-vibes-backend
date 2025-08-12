@@ -40,6 +40,9 @@ class DatabaseSeeder extends Seeder
         Blog::factory(5)->create();
         SeoSetting::factory(5)->create();
         SiteSetting::factory()->create();
+        $this->call([
+            RbacSeeder::class,
+        ]);
 
         // User::factory()->create([
         //     'name' => 'Test User',
