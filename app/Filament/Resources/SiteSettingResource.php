@@ -17,7 +17,7 @@ class SiteSettingResource extends Resource
 {
     protected static ?string $model = SiteSetting::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-cog';
 
     public static function form(Form $form): Form
     {

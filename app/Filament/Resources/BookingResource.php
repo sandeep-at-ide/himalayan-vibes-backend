@@ -19,7 +19,7 @@ class BookingResource extends Resource
 {
     protected static ?string $model = Booking::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-date-range';
 
     public static function form(Form $form): Form
     {
@@ -127,9 +127,6 @@ class BookingResource extends Resource
         return 'Bookings & Queries';  // assign appropriate group name
     }
 
-    public static function getNavigationGroupIcon(): ?string
-    {
-        return 'heroicon-o-calendar'; // optional: icon for the group
-    }
+    
 
 }

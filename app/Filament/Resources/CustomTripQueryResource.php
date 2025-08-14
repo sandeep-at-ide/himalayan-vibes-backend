@@ -17,7 +17,7 @@ class CustomTripQueryResource extends Resource
 {
     protected static ?string $model = CustomTripQuery::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard';
 
     public static function form(Form $form): Form
     {

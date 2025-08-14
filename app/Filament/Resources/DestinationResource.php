@@ -17,7 +17,7 @@ class DestinationResource extends Resource
 {
     protected static ?string $model = Destination::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-map';
 
     public static function form(Form $form): Form
     {
@@ -84,11 +84,11 @@ class DestinationResource extends Resource
     }
     public static function getNavigationGroup(): ?string
     {
-        return 'Content Management';  // assign appropriate group name
+        return 'Content Management';  
     }
 
     public static function getNavigationGroupIcon(): ?string
     {
-        return 'heroicon-o-map'; // optional: icon for the group
+        return 'heroicon-o-map'; 
     }
 }
