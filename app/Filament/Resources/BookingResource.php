@@ -45,7 +45,8 @@ class BookingResource extends Resource
                 Forms\Components\TextInput::make('package_id')
                     ->required()
                     ->numeric(),
-                Forms\Components\DatePicker::make('booking_date'),
+                Forms\Components\DatePicker::make('booking_date')
+                    ->minDate(now()),
                 Forms\Components\TextInput::make('number_of_people')
                     ->numeric(),
                 Forms\Components\TextInput::make('total_price')
