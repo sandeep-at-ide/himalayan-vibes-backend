@@ -17,10 +17,11 @@ return new class extends Migration
             $table->foreignId('package_id')->constrained('packages')->onDelete('cascade');
             $table->date('booking_date')->nullable();
             $table->integer('number_of_people')->nullable();
-            $table->decimal('total_price', 10, 2)->nullable();
+            $table->decimal('package_price')->nullable();
             $table->decimal('vat_amount', 10, 2)->nullable();
             $table->decimal('discount', 10, 2)->nullable();
-            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
+            $table->decimal('total_price', 10, 2)->nullable();
+            $table->enum('status', ['pending', 'reviewed', 'approved', 'rejected', 'replied'])->default('pending');
             $table->timestamps();
         });
 
