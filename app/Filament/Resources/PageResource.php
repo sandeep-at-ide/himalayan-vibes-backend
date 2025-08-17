@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
+
 
 class PageResource extends Resource
 {
@@ -23,10 +25,15 @@ class PageResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('title')
+                    ->maxLength(255)
+                    ->lazy()
+                    ->required() 
+                    ->afterStateUpdated(function (callable $set, $state) {
+                        $set('slug', Str::slug($state));
+                    }),
                 Forms\Components\TextInput::make('slug')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('title')
                     ->maxLength(255),
                 Forms\Components\Textarea::make('content')
                     ->columnSpanFull(),
@@ -44,9 +51,9 @@ class PageResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('seo_id')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('seo_id')
+                //     ->numeric()
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

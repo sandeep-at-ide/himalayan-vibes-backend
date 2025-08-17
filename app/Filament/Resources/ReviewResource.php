@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Enums\TripExperienceRating;
 
 class ReviewResource extends Resource
 {
@@ -23,14 +24,31 @@ class ReviewResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->searchable()
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('package_id')
+                    ->reactive() // important to trigger dependent updates
+                    ->afterStateUpdated(fn (callable $set) => $set('package_id', null)), 
+                Forms\Components\Select::make('package_id')
+                    ->label('Package')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('rating')
-                    ->numeric(),
+                    ->options(function (callable $get) {
+                        $userId = $get('user_id');
+                        if (!$userId) {
+                            return [];
+                        }
+
+                        return \App\Models\Booking::where('user_id', $userId)
+                            ->with('package')  // eager load package
+                            ->get()
+                            ->pluck('package.title', 'package_id') // get package titles keyed by package_id
+                            ->toArray();
+                    })
+                    ->searchable(),
+                Forms\Components\Select::make('rating')
+                    ->options(TripExperienceRating::options())
+                    ->required(),
                 Forms\Components\Textarea::make('comment')
                     ->columnSpanFull(),
             ]);
@@ -40,14 +58,17 @@ class ReviewResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('package_id')
+                Tables\Columns\TextColumn::make('package.title')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('rating')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state) => 
+                            $state instanceof \App\Enums\TripExperienceRating ? $state->label()
+                                : \App\Enums\TripExperienceRating::from($state)->label()
+                        )
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

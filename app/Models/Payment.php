@@ -14,4 +14,10 @@ protected $guarded = [];
     {
         return $this->belongsTo(Booking::class, 'booking_id');
     }
+
+    public function getUserAttribute()
+    {
+        return $this->booking?->user;
+    }
+
 }

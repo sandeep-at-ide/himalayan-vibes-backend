@@ -40,8 +40,7 @@ class PaymentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('booking_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('user.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('payment_method')
                     ->searchable(),
@@ -61,8 +60,15 @@ class PaymentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('payment_method')
+                    ->label('Payment Method')
+                    ->options([
+                        'bank' => 'Bank',
+                        'card' => 'Card',
+                        'paypal' => 'Wallet',
+                    ]),
             ])
+
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

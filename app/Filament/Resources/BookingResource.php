@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use App\Enums\Status;
 
 class BookingResource extends Resource
 {
@@ -67,7 +68,7 @@ class BookingResource extends Resource
                 ->label('Package Price')
                 ->numeric()
                 ->disabled()
-                ->required()
+                ->required(Status::options())
                 ->default(0),
 
             Forms\Components\TextInput::make('vat_amount')

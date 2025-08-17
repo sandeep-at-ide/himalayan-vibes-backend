@@ -38,7 +38,11 @@ class SeoSettingResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('meta_title')
+                    ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('meta_keywords')
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
