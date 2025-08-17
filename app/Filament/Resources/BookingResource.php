@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BookingResource\Pages;
 use App\Models\Booking;
 use App\Models\Package;
+use Filament\Forms\Components;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -42,47 +43,62 @@ class BookingResource extends Resource
                 }),
 
             // Package selection
+
             Forms\Components\Select::make('package_id')
                 ->label('Package')
                 ->relationship('package', 'title')
                 ->required()
                 ->reactive()
-                ->afterStateUpdated(function (callable $set, $state) {
-                    $package = Package::find($state);
-                    $set('package_price', $package?->price ?? 0);
+                ->afterStateUpdated(function (callable $set, $state, callable $get) {
+                    $package = \App\Models\Package::find($state);
+
+                    $price = $package?->price ?? 0;
+                    $vat = round($price * 0.13, 2); // 13% VAT
+
+                    $discount = $get('discount') ?? 0;
+                    $total = ($price + $vat) - $discount;
+
+                    $set('package_price', $price);
+                    $set('vat_amount', $vat);
+                    $set('total_price', round($total, 2));
                 }),
 
-            // Auto-filled package price
             Forms\Components\TextInput::make('package_price')
                 ->label('Package Price')
                 ->numeric()
                 ->disabled()
-                ->required(),
-
-            Forms\Components\DatePicker::make('booking_date')
-                ->label('Booking Date')
-                ->minDate(now())
-                ->required(),
-
-            Forms\Components\TextInput::make('number_of_people')
-                ->label('Number of People')
-                ->numeric()
-                ->required(),
+                ->required()
+                ->default(0),
 
             Forms\Components\TextInput::make('vat_amount')
-                ->label('VAT Amount')
+                ->label('VAT Amount (13%)')
                 ->numeric()
-                ->nullable(),
+                ->disabled()
+                ->step(0.01)
+                ->default(0)
+                ->required(),
 
             Forms\Components\TextInput::make('discount')
                 ->label('Discount')
                 ->numeric()
-                ->nullable(),
+                ->step(0.01)
+                ->default(0)
+                ->reactive()
+                ->afterStateUpdated(function (callable $set, callable $get, $state) {
+                    $price = $get('package_price') ?? 0;
+                    $vat = $get('vat_amount') ?? 0;
+                    $discount = $state ?? 0;
+
+                    $total = ($price + $vat) - $discount;
+                    $set('total_price', round($total, 2));
+                }),
 
             Forms\Components\TextInput::make('total_price')
                 ->label('Total Price')
                 ->numeric()
-                ->nullable(),
+                ->disabled()
+                ->default(0)
+                ->required(),
 
             Forms\Components\Select::make('status')
                 ->required()
@@ -120,20 +136,20 @@ class BookingResource extends Resource
                     ->numeric()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('package_price')
-                    ->label('Price')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('package_price')
+                //     ->label('Price')
+                //     ->numeric()
+                //     ->sortable(),
 
-                Tables\Columns\TextColumn::make('vat_amount')
-                    ->label('VAT')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('vat_amount')
+                //     ->label('VAT')
+                //     ->numeric()
+                //     ->sortable(),
 
-                Tables\Columns\TextColumn::make('discount')
-                    ->label('Discount')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('discount')
+                //     ->label('Discount')
+                //     ->numeric()
+                //     ->sortable(),
 
                 Tables\Columns\TextColumn::make('total_price')
                     ->label('Total Price')
