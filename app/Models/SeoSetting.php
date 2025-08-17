@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SeoSetting extends Model
 {
      use HasFactory;
-    protected $fillable = ['*'];
+protected $guarded = [];
     protected $casts = [
         'custom_fields' => 'array',
     ];
