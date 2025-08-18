@@ -16,4 +16,5 @@ class EditBooking extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+    
 }

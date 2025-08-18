@@ -201,4 +201,15 @@ class BookingResource extends Resource
             'edit' => Pages\EditBooking::route('/{record}/edit'),
         ];
     }
+    // public static function canAccess(): bool
+    // {
+    //     $user = auth()->user();
+    //     if (! $user || ! $user->role) {
+    //         return false;
+    //     }
+    //     return in_array($user->role->name, ['admin', 'editor']);
+    // }
+
+    
+
 }

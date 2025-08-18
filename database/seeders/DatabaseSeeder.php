@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\TeamMember;
 use App\Models\Destination;
@@ -26,27 +27,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
-        TeamMember::factory(5)->create();
-        Destination::factory(8)->create();
-        Package::factory(12)->create();
-        Booking::factory(20)->create();
-        Payment::factory(15)->create();
-        Review::factory(30)->create();
-        ContactMessage::factory(10)->create();
-        CustomTripQuery::factory(5)->create();
-        Faq::factory(10)->create();
-        Page::factory(5)->create();
-        Blog::factory(5)->create();
-        SeoSetting::factory(5)->create();
-        SiteSetting::factory()->create();
+        // User::factory(10)->create();
+        // TeamMember::factory(5)->create();
+        // Destination::factory(8)->create();
+        // Package::factory(12)->create();
+        // Booking::factory(20)->create();
+        // Payment::factory(15)->create();
+        // Review::factory(30)->create();
+        // ContactMessage::factory(10)->create();
+        // CustomTripQuery::factory(5)->create();
+        // Faq::factory(10)->create();
+        // Page::factory(5)->create();
+        // Blog::factory(5)->create();
+        // SeoSetting::factory(5)->create();
+        // SiteSetting::factory()->create();
         $this->call([
             RbacSeeder::class,
         ]);
 
         // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
+        //     'name' => 'editor user',
+        //     'email' => 'editor@example.com',
+        //     'password' => Hash::make('password'),
+        //     'role_id' => 1
         // ]);
     //    $this->call(BlogSeeder::class);
     }

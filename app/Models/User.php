@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Role;
 
 
 
@@ -43,6 +44,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(ContactMessage::class, 'user_id');
     }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
 
     protected $fillable = [
         'name',
@@ -74,8 +80,5 @@ class User extends Authenticatable
         ];
     }
 
-    // public function canAccessPanel(\Filament\Panel $panel): bool
-    // {
-    //     return str_ends_with($this->email, '@nam.com');
-    // }
+    
 }
