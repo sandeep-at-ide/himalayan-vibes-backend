@@ -113,13 +113,7 @@ class BookingResource extends Resource
 
             Forms\Components\Select::make('status')
                 ->required()
-                ->options([
-                    'pending' => 'Pending',
-                    'reviewed' => 'Reviewed',
-                    'approved' => 'Approved',
-                    'rejected' => 'Rejected',
-                    'replied' => 'Replied',
-                ]),
+                ->options(Status::options())
         ]);
     }
 

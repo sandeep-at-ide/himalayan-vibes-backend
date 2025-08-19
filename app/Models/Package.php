@@ -37,6 +37,6 @@ protected $guarded = [];
 
     public function seoSettings()
     {
-        return $this->hasOne(SeoSetting::class, 'seo_id');
+        return $this->belongsTo(SeoSetting::class, 'seo_id');
     }
 }
