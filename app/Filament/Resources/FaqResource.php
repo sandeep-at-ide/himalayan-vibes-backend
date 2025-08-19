@@ -23,21 +23,24 @@ class FaqResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('package_id')
+                Forms\Components\Select::make('package_id')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('question')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('answer')
-                    ->columnSpanFull(),
-            ]);
+                    ->relationship('package', 'title'),
+                Forms\Components\MarkdownEditor::make('question')
+                    ->maxLength(255)
+                    ->required(),
+                Forms\Components\MarkdownEditor::make('answer')
+                    ->columnSpanFull()
+                    ->required(),
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('package_id')
+                Tables\Columns\TextColumn::make('package.title')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('question')

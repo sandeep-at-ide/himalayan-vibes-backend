@@ -57,18 +57,18 @@ class BookingResource extends Resource
                     $vat = round($price * 0.13, 2); // 13% VAT
 
                     $discount = $get('discount') ?? 0;
-                    $total = ($price + $vat) - $discount;
+                    $total = ($price + $vat);
 
                     $set('package_price', $price);
                     $set('vat_amount', $vat);
                     $set('total_price', round($total, 2));
-                }),
+                })
+,
 
             Forms\Components\TextInput::make('package_price')
                 ->label('Package Price')
                 ->numeric()
-                ->disabled()
-                ->required(Status::options())
+                ->disabled()    
                 ->default(0),
 
             Forms\Components\TextInput::make('vat_amount')
@@ -84,22 +84,32 @@ class BookingResource extends Resource
                 ->numeric()
                 ->step(0.01)
                 ->default(0)
-                ->reactive()
+                ->reactive()  // Make the field reactive
                 ->afterStateUpdated(function (callable $set, callable $get, $state) {
+                    // Ensure that we don't get null or empty values
                     $price = $get('package_price') ?? 0;
                     $vat = $get('vat_amount') ?? 0;
-                    $discount = $state ?? 0;
+                    $discount = $state ?? 0; // Default to 0 if state is null
 
+                    // Calculate total price
                     $total = ($price + $vat) - $discount;
-                    $set('total_price', round($total, 2));
+                    $set('total_price', round($total, 2));  // Set the total price value
                 }),
 
             Forms\Components\TextInput::make('total_price')
                 ->label('Total Price')
                 ->numeric()
-                ->disabled()
+                ->readOnly()  // You can keep it disabled if needed
                 ->default(0)
                 ->required(),
+            Forms\Components\DatePicker::make('booking_date')
+                ->label('Booking Date')
+                ->required()  // Make the field required, or you can remove this if not needed
+                ->default(now())  // Set the default value to the current date
+                ->reactive()  // Enable dynamic updating if needed
+                ->minDate(now())  // Optionally restrict the selection to today's date or later
+                ->helperText('Please select a date for booking'),  // Optional helper text
+
 
             Forms\Components\Select::make('status')
                 ->required()

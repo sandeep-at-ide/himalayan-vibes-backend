@@ -41,7 +41,7 @@ class CustomTripQueryResource extends Resource
                     ->numeric(),
                 Forms\Components\TextInput::make('budget')
                     ->numeric(),
-                Forms\Components\Textarea::make('message')
+                Forms\Components\MarkdownEditor::make('message')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('status')
                     ->required(),

@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class DestinationResource extends Resource
 {
@@ -24,13 +25,19 @@ class DestinationResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->lazy() 
+                    ->required()
+                    ->afterStateUpdated(function (callable $set, $state) {
+                        $set('slug', Str::slug($state));
+                    }),
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('country')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                    ->maxLength(255)
+                    ->required(),
+                Forms\Components\MarkdownEditor::make('description')
                     ->columnSpanFull(),
             ]);
     }

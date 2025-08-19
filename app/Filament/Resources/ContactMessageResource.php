@@ -30,7 +30,7 @@ class ContactMessageResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('subject')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('message')
+                Forms\Components\MarkdownEditor::make('message')
                     ->columnSpanFull(),
             ]);
     }

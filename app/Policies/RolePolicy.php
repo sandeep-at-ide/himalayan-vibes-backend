@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Policies;
 
 use App\Models\User;
@@ -15,7 +14,8 @@ class RolePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_role');
+        // Check if the user is a super admin or has the 'view_any_role' permission
+        return $user->hasRole('super_admin') || $user->can('view_any_role');
     }
 
     /**
@@ -23,7 +23,8 @@ class RolePolicy
      */
     public function view(User $user, Role $role): bool
     {
-        return $user->can('view_role');
+        // Check if the user is a super admin or has the 'view_role' permission
+        return $user->hasRole('super_admin') || $user->can('view_role');
     }
 
     /**
@@ -31,7 +32,8 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_role');
+        // Check if the user is a super admin or has the 'create_role' permission
+        return $user->hasRole('super_admin') || $user->can('create_role');
     }
 
     /**
@@ -39,7 +41,8 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return $user->can('update_role');
+        // Check if the user is a super admin or has the 'update_role' permission
+        return $user->hasRole('super_admin') || $user->can('update_role');
     }
 
     /**
@@ -47,7 +50,8 @@ class RolePolicy
      */
     public function delete(User $user, Role $role): bool
     {
-        return $user->can('delete_role');
+        // Check if the user is a super admin or has the 'delete_role' permission
+        return $user->hasRole('super_admin') || $user->can('delete_role');
     }
 
     /**
@@ -55,7 +59,8 @@ class RolePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_role');
+        // Check if the user is a super admin or has the 'delete_any_role' permission
+        return $user->hasRole('super_admin') || $user->can('delete_any_role');
     }
 
     /**
@@ -63,7 +68,8 @@ class RolePolicy
      */
     public function forceDelete(User $user, Role $role): bool
     {
-        return $user->can('{{ ForceDelete }}');
+        // Check if the user is a super admin or has the 'ForceDelete' permission
+        return $user->hasRole('super_admin') || $user->can('ForceDelete');
     }
 
     /**
@@ -71,7 +77,8 @@ class RolePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('{{ ForceDeleteAny }}');
+        // Check if the user is a super admin or has the 'ForceDeleteAny' permission
+        return $user->hasRole('super_admin') || $user->can('ForceDeleteAny');
     }
 
     /**
@@ -79,7 +86,8 @@ class RolePolicy
      */
     public function restore(User $user, Role $role): bool
     {
-        return $user->can('{{ Restore }}');
+        // Check if the user is a super admin or has the 'Restore' permission
+        return $user->hasRole('super_admin') || $user->can('Restore');
     }
 
     /**
@@ -87,7 +95,8 @@ class RolePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('{{ RestoreAny }}');
+        // Check if the user is a super admin or has the 'RestoreAny' permission
+        return $user->hasRole('super_admin') || $user->can('RestoreAny');
     }
 
     /**
@@ -95,7 +104,8 @@ class RolePolicy
      */
     public function replicate(User $user, Role $role): bool
     {
-        return $user->can('{{ Replicate }}');
+        // Check if the user is a super admin or has the 'Replicate' permission
+        return $user->hasRole('super_admin') || $user->can('Replicate');
     }
 
     /**
@@ -103,6 +113,7 @@ class RolePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('{{ Reorder }}');
+        // Check if the user is a super admin or has the 'Reorder' permission
+        return $user->hasRole('super_admin') || $user->can('Reorder');
     }
 }
