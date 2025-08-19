@@ -162,9 +162,10 @@ class PackageResource extends Resource
                 Tables\Columns\TextColumn::make('created_by')
                     ->numeric()
                     ->sortable(),
-                // Tables\Columns\TextColumn::make('seo_id')
-                //     ->numeric()
-                //     ->sortable(),
+                Tables\Columns\TextColumn::make('seo.meta_title')
+                    ->label('SEO Title')
+                    ->searchable() // Can search through related SEO titles
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -112,7 +112,27 @@ class PageResource extends Resource
 
                     ])
                     ->columns(2),
-                Forms\Components\TextInput::make('custom_fields'),
+                Forms\Components\Section::make('custom_fields')
+                ->label('Custom Data Fields for Pages')
+                ->schema([
+                // Forms\Components\KeyValue::make('custom_fields')
+                //     ->nullable()
+                //     ->label('Custom Data Fields for Pages') // Labeling as "Pages-specific"
+                //     ->helperText('Add unstructured key-value data specific to this page.')
+                //     ->columnSpanFull(),
+
+                 // Add specific fields for Pages table
+                Forms\Components\TextInput::make('custom_fields.page_title')
+                    ->label('Page Title')
+                    ->maxLength(255)
+                    ->nullable()
+                    // ->when(fn($get) => $get('page_type') === 'standard'), // Show for specific page types
+,
+                Forms\Components\MarkdownEditor::make('custom_fields.page_content')
+                    ->label('Page Content')
+                    ->nullable()
+                    // ->when(fn($get) => $get('page_type') === 'standard'), // Show for specific page types
+                ]),
             ]);
     }
 
@@ -124,9 +144,10 @@ class PageResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('seo_id')
-                //     ->numeric()
-                //     ->sortable(),
+                Tables\Columns\TextColumn::make('seo.meta_title')
+                    ->label('SEO Title')
+                    ->searchable() // Can search through related SEO titles
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -141,6 +162,7 @@ class PageResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -141,6 +141,10 @@ class BlogResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('seo.meta_title')
+                    ->label('SEO Title')
+                    ->searchable() // Can search through related SEO titles
+                    ->sortable(),
             ])
             ->filters([
                 //
