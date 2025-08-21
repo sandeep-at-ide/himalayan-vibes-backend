@@ -39,4 +39,9 @@ protected $guarded = [];
     {
         return $this->belongsTo(SeoSetting::class, 'seo_id');
     }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
 }

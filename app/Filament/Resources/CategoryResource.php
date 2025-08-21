@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DestinationResource\Pages;
-use App\Filament\Resources\DestinationResource\RelationManagers;
-use App\Models\Destination;
+use App\Filament\Resources\CategoryResource\Pages;
+use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,35 +12,27 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Str;
 
-class DestinationResource extends Resource
+class CategoryResource extends Resource
 {
-    protected static ?string $model = Destination::class;
+    protected static ?string $model = Category::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-map';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->maxLength(255)
-                    ->lazy() 
                     ->required()
-                    ->afterStateUpdated(function (callable $set, $state) {
-                        $set('slug', Str::slug($state));
-                    }),
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('country')
-                    ->maxLength(255)
-                    ->required(),
-                Forms\Components\Select::make('category_id')
-                    ->relationship('category', 'name'),
-                Forms\Components\MarkdownEditor::make('description')
+                Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
+                Forms\Components\TextInput::make('type')
+                    ->required(),
             ]);
     }
 
@@ -52,10 +44,7 @@ class DestinationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('country')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('category.name')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -88,18 +77,9 @@ class DestinationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDestinations::route('/'),
-            'create' => Pages\CreateDestination::route('/create'),
-            'edit' => Pages\EditDestination::route('/{record}/edit'),
+            'index' => Pages\ListCategories::route('/'),
+            'create' => Pages\CreateCategory::route('/create'),
+            'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
-    }
-    public static function getNavigationGroup(): ?string
-    {
-        return 'Content Management';  
-    }
-
-    public static function getNavigationGroupIcon(): ?string
-    {
-        return 'heroicon-o-map'; 
     }
 }

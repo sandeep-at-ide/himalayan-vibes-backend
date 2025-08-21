@@ -14,4 +14,9 @@ protected $guarded = [];
     {
         return $this->hasMany(Package::class, 'location');
     }
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Category;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Package>
@@ -16,6 +17,8 @@ class PackageFactory extends Factory
      */
     public function definition(): array
     {
+        $categoryId = Category::where('type', 'destination')->inRandomOrder()->value('id');
+
         return [
             'slug' => fake()->unique()->slug(),
             'title' => fake()->sentence(3),
@@ -27,6 +30,8 @@ class PackageFactory extends Factory
             'image_url' => fake()->imageUrl(),
             'created_by' => \App\Models\TeamMember::factory(),
             'seo_id' => \App\Models\SeoSetting::factory(),
+            'category_id' => $categoryId,
+
         ];
 
     }

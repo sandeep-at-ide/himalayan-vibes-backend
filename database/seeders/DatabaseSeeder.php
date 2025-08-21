@@ -17,6 +17,7 @@ use App\Models\Page;
 use App\Models\Blog;
 use App\Models\SeoSetting;
 use App\Models\SiteSetting;
+use App\Models\Category;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -41,6 +42,7 @@ class DatabaseSeeder extends Seeder
         Blog::factory(5)->create();
         SeoSetting::factory(5)->create();
         SiteSetting::factory()->create();
+        Category::factory(10)->create();
        
 
         // User::factory()->create([
