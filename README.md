@@ -1,3 +1,4 @@
+```mermaid
 erDiagram
     direction TB
     USERS {
@@ -162,3 +163,4 @@ erDiagram
     style BLOGS stroke:#000000
     style SEOSETTINGS stroke:#000000
     style SITESETTINGS stroke:#000000
+```
