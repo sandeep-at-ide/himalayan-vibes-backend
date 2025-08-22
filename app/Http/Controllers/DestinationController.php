@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Destination;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class DestinationController extends Controller
@@ -9,43 +11,54 @@ class DestinationController extends Controller
     public function index(Request $request)
     {
         $slug = $request->query('slug');
-        if(!$slug){
-            return response()->json(Destination::all());
+        $category_slug = $request->query('categoryslug');
+
+        // If a specific destination slug is provided
+        if ($slug) {
+            $destination = Destination::where('slug', $slug)->first();
+            if (!$destination) {
+                return (new ErrorController)->notFound();
+            }
+            return $this->show($destination);
         }
-        $destination = Destination::where('slug', $slug)->first();
-        return response()->json($destination);
+
+        // If a category slug is provided
+        if ($category_slug) {
+            $category = Category::where('slug', $category_slug)->first();
+            if (!$category) {
+                return (new ErrorController)->notFound();
+            }
+
+            $destinations = Destination::where('category_id', $category->id)->get();
+            if ($destinations->isEmpty()) {
+                return (new ErrorController)->notFound();
+            }
+
+            return $this->show($destinations);
+        }
+
+        // Default: return all destinations
+        $destinations = Destination::all();
+        return $this->show($destinations);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Destination $destination)
+    public function show($destination)
     {
-        
+        return response()->json($destination);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Destination $destination)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Destination $destination)
     {
         //
     }
-
 }

@@ -10,13 +10,26 @@ class CategoryController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
+    {   
+        $type = $request->query('type');
         $slug = $request->query('slug');
-        if(!$slug){
-            return response()->json(Category::all());
+
+        if(!$type){
+            return response()->json(['error' => 'type is required'], 400);
         }
-        $category = Category::where('slug', $slug)->first();
-        return response()->json($category);
+        $categories = Category::where('type', $type)->get();
+        if($categories->isEmpty()){
+            return response()->json(['error' => 'category not found of type'], 404);
+        }
+        if(!$slug){
+            return $this->show($categories);
+        }
+        $category = $categories->where('slug', $slug)->first();
+        if($category === Null){
+            return response()->json(['error' => 'category not found of slug'], 404);
+
+        }
+        return $this->show($category);
         // return response()->json(['message'=>'done']);
     }
 
@@ -31,9 +44,10 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($categories)
     {
-        //
+        return response()->json($categories);
+
     }
 
     /**

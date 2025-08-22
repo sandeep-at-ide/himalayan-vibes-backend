@@ -28,20 +28,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
-        TeamMember::factory(5)->create();
-        Destination::factory(8)->create();
-        Package::factory(12)->create();
-        Booking::factory(20)->create();
-        Payment::factory(15)->create();
-        Review::factory(30)->create();
-        ContactMessage::factory(10)->create();
-        CustomTripQuery::factory(5)->create();
-        Faq::factory(10)->create();
-        Page::factory(5)->create();
-        Blog::factory(5)->create();
-        SeoSetting::factory(5)->create();
-        SiteSetting::factory()->create();
+        // User::factory(10)->create();
+        // TeamMember::factory(5)->create();
+        // Destination::factory(8)->create();
+        // Package::factory(12)->create();
+        // Booking::factory(20)->create();
+        // Payment::factory(15)->create();
+        // Review::factory(30)->create();
+        // ContactMessage::factory(10)->create();
+        // CustomTripQuery::factory(5)->create();
+        // Faq::factory(10)->create();
+        // Page::factory(5)->create();
+        // Blog::factory(5)->create();
+        // SeoSetting::factory(5)->create();
+        // SiteSetting::factory()->create();
         Category::factory(10)->create();
        
 

@@ -11,6 +11,8 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\BookingsController;
+use App\Http\Controllers\SiteController;
 
 use Illuminate\Validation\ValidationException;
 
@@ -44,6 +46,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/destinations', [DestinationController::class, 'index']);
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/reviews', [ReviewController::class, 'index']);
+    Route::get('/bookings', [BookingsController::class, 'index']);
+    Route::get('/site', [SiteController::class, 'index']);
+    
 
 
     //  Route::get('/test', function () {
