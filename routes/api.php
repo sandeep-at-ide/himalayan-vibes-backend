@@ -48,12 +48,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/reviews', ReviewController::class);
     Route::apiResource('/customtrip', CustomTripQueryController::class);
     Route::apiResource('/contactmessage', ContactMessageController::class);
-    // // Route::get('/contactmessage', function () {
-    // //     return response()->json(['message'=> 'Test passed']);
-    // // });
-
-    
-
     // ✅ Example test route (optional)
     // Route::get('/test', function () {
     //     return response()->json(['message'=> 'Test passed']);
