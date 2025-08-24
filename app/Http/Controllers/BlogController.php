@@ -12,28 +12,25 @@ class BlogController extends Controller
      */
     public function index(Request $request)
     {
+        $blog = (Blog::all());
         $slug = $request->query('slug');
-        if(!$slug){
-            return response()->json(Blog::all());
+        if($slug){
+            $blog = $blog->where('slug', $slug)->first();
+            if(!$blog){
+                return (new ErrorController)->notFound();
+            }
         }
-        $blog = Blog::where('slug', $slug)->first();
         return response()->json($blog);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
      */
-    public function show(Blog $blog)
+    public function show(string $slug)
     {
-        
+        return response()->json(Blog::find($slug));
+
     }
 
     /**

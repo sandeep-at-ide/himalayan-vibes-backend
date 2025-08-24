@@ -43,10 +43,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/faqs', [FaqController::class, 'index']);
     Route::get('/blogs', [BlogController::class, 'index']);
     Route::get('/pages', [PageController::class, 'index']);
-    Route::get('/destinations', [DestinationController::class, 'index']);
+    Route::resource('/destinations', DestinationController::class);
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/reviews', [ReviewController::class, 'index']);
-    Route::get('/bookings', [BookingsController::class, 'index']);
+    Route::apiResource('/bookings',BookingsController::class);
     Route::get('/site', [SiteController::class, 'index']);
     
 

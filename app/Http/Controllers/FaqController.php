@@ -14,9 +14,12 @@ class FaqController extends Controller
     {
         $package_id = $request->query('package_id');
         if(!$package_id){
-            return response()->json(['error' => 'package_id is required'], 400);
+            return (new ErrorController)->badRequest();
         }
         $faqs = Faq::where('package_id', $package_id)->first();
+        if(!$faqs){
+            return (new ErrorController)->notFound();
+        }
         return response()->json($faqs);
 
     }

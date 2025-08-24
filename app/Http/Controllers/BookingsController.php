@@ -8,67 +8,125 @@ use Illuminate\Http\Request;
 class BookingsController extends Controller
 {
     /**
-     * Display a listing of the resource or a specific booking.
+     * Display a list of bookings or a specific booking.
      */
     public function index(Request $request)
     {
-        $user_id = $request->query('user_id');
+        $user_id = auth()->id();
         $booking_id = $request->query('booking_id');
 
-        if (!$user_id) {
-            return response()->json(['error' => 'user_id is required'], 400);
-        }
-
-        // Fetch all bookings for the user
-        $bookings = Booking::where('User_id', $user_id)->get();
+        $bookings = Booking::where('user_id', $user_id)->get();
 
         if ($booking_id) {
-            // Find a specific booking from the list
             $booking = $bookings->where('id', $booking_id)->first();
 
             if (!$booking) {
-                return response()->json(['error' => 'Booking not found for this user'], 404);
+                return (new ErrorController)->notFound('Booking not found for this user');
             }
 
             return response()->json($booking);
         }
 
         if ($bookings->isEmpty()) {
-            return response()->json(['error' => 'No bookings found for this user'], 404);
+            return (new ErrorController)->notFound('No bookings found for this user');
         }
 
         return response()->json($bookings);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new booking.
      */
     public function store(Request $request)
     {
-        // To be implemented
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'package_id' => 'required|exists:packages,id',
+            'booking_date' => 'nullable|date',
+            'number_of_people' => 'nullable|integer|min:1',
+            'package_price' => 'nullable|numeric|min:0',
+            'vat_amount' => 'nullable|numeric|min:0',
+            'discount' => 'nullable|numeric|min:0',
+            'total_price' => 'nullable|numeric|min:0',
+            'status' => 'required|in:pending,reviewed,approved,rejected,replied',
+        ]);
+
+
+        $validated['user_id'] = auth()->id();
+
+        $booking = Booking::create($validated);
+
+        return response()->json([
+            'message' => 'Booking created successfully',
+            'data' => $booking
+        ], 201);
     }
 
     /**
-     * Display the specified resource.
+     * Display a specific booking.
      */
-    public function show($booking)
+    public function show(string $id)
     {
+        $user_id = auth()->id();
+        $booking = Booking::where('id', $id)
+                          ->where('user_id', $user_id)
+                          ->first();
+
+        if (!$booking) {
+            return (new ErrorController)->notFound('Booking not found');
+        }
+
         return response()->json($booking);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a booking.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        // To be implemented
+        $user_id = auth()->id();
+        $booking_id = $request->query('booking_id');
+
+        $booking = Booking::where('id', $booking_id)
+                          ->where('user_id', $user_id)
+                          ->first();
+
+        if (!$booking) {
+            return (new ErrorController)->notFound('Booking not found');
+        }
+
+        $validated = $request->validate([
+            'destination_id' => 'sometimes|exists:destinations,id',
+            'booking_date' => 'sometimes|date',
+            'status' => 'sometimes|string',
+            'total_price' => 'sometimes|numeric|min:0'
+        ]);
+
+        $booking->update($validated);
+
+        return response()->json([
+            'message' => 'Booking updated successfully',
+            'data' => $booking
+        ]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a booking.
      */
     public function destroy(string $id)
     {
-        // To be implemented
+        $user_id = auth()->id();
+
+        $booking = Booking::where('id', $id)
+                          ->where('user_id', $user_id)
+                          ->first();
+
+        if (!$booking) {
+            return (new ErrorController)->notFound('Booking not found');
+        }
+
+        $booking->delete();
+
+        return response()->json(['message' => 'Booking deleted successfully']);
     }
 }
