@@ -3,21 +3,24 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use App\Http\Controllers\PackageController;
-use App\Http\Controllers\FaqController;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\DestinationController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\BookingsController;
-use App\Http\Controllers\SiteController;
-
 use Illuminate\Validation\ValidationException;
 
-Route::post('/login', function (Request $request) 
-{
+use App\Models\User;
+use App\Http\Controllers\{
+    PackageController,
+    FaqController,
+    BlogController,
+    PageController,
+    DestinationController,
+    CategoryController,
+    ReviewController,
+    BookingsController,
+    SiteController,
+    CustomTripQueryController
+};
+
+// Login route
+Route::post('/login', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
         'password' => 'required',
@@ -36,23 +39,26 @@ Route::post('/login', function (Request $request)
     ]);
 });
 
-
-//get Apis for Read Operations
+// Authenticated API routes
 Route::middleware('auth:sanctum')->group(function () {
+
+    // ✅ Full API resources (CRUD)
+    Route::apiResource('/bookings', BookingsController::class);
+    Route::apiResource('/reviews', ReviewController::class);
+    Route::apiResource('/customtrip', CustomTripQueryController::class);
+
+
+    // ✅ Read-only GET routes
     Route::get('/packages', [PackageController::class, 'index']);
     Route::get('/faqs', [FaqController::class, 'index']);
     Route::get('/blogs', [BlogController::class, 'index']);
     Route::get('/pages', [PageController::class, 'index']);
-    Route::resource('/destinations', DestinationController::class);
     Route::get('/categories', [CategoryController::class, 'index']);
-    Route::get('/reviews', [ReviewController::class, 'index']);
-    Route::apiResource('/bookings',BookingsController::class);
+    Route::get('/destinations', [DestinationController::class, 'index']);
     Route::get('/site', [SiteController::class, 'index']);
-    
 
-
-    //  Route::get('/test', function () {
-    //     return response()->json(['message'=> 'message ho nee']);
-    // });   
+    // ✅ Example test route (optional)
+    // Route::get('/test', function () {
+    //     return response()->json(['message'=> 'Test passed']);
+    // });
 });
-

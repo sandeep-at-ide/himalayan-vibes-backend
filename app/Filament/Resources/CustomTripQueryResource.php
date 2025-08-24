@@ -23,28 +23,34 @@ class CustomTripQueryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('name')
-                    ->maxLength(255),
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name'),
                 Forms\Components\TextInput::make('email')
                     ->email()
+                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
+                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('preferred_location')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('travel_dates')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->required(),
+                Forms\Components\DatePicker::make('travel_dates')
+                    ->label('Travel Date') 
+                    ->required()           
+                    ->displayFormat('Y-m-d'),
                 Forms\Components\TextInput::make('number_of_people')
-                    ->numeric(),
+                    ->numeric()
+                    ->required(),
                 Forms\Components\TextInput::make('budget')
                     ->numeric(),
                 Forms\Components\MarkdownEditor::make('message')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('status')
-                    ->required(),
+                    ->required()
+                    ->default('pending')
+                    ->readonly(),
             ]);
     }
 
