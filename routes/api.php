@@ -16,7 +16,8 @@ use App\Http\Controllers\{
     ReviewController,
     BookingsController,
     SiteController,
-    CustomTripQueryController
+    CustomTripQueryController,
+    ContactMessageController,
 };
 
 // Login route
@@ -46,19 +47,24 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/bookings', BookingsController::class);
     Route::apiResource('/reviews', ReviewController::class);
     Route::apiResource('/customtrip', CustomTripQueryController::class);
+    Route::apiResource('/contactmessage', ContactMessageController::class);
+    // // Route::get('/contactmessage', function () {
+    // //     return response()->json(['message'=> 'Test passed']);
+    // // });
 
-
-    // ✅ Read-only GET routes
-    Route::get('/packages', [PackageController::class, 'index']);
-    Route::get('/faqs', [FaqController::class, 'index']);
-    Route::get('/blogs', [BlogController::class, 'index']);
-    Route::get('/pages', [PageController::class, 'index']);
-    Route::get('/categories', [CategoryController::class, 'index']);
-    Route::get('/destinations', [DestinationController::class, 'index']);
-    Route::get('/site', [SiteController::class, 'index']);
+    
 
     // ✅ Example test route (optional)
     // Route::get('/test', function () {
     //     return response()->json(['message'=> 'Test passed']);
     // });
 });
+
+// ✅ Read-only GET routes
+Route::get('/packages', [PackageController::class, 'index']);
+Route::get('/faqs', [FaqController::class, 'index']);
+Route::get('/blogs', [BlogController::class, 'index']);
+Route::get('/pages', [PageController::class, 'index']);
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/destinations', [DestinationController::class, 'index']);
+Route::get('/site', [SiteController::class, 'index']);
